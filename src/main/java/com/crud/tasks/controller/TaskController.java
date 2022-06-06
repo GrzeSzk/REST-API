@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/tasks")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class TaskController {
 
     private final DbService service;
@@ -36,8 +37,8 @@ public class TaskController {
     }
 
     @DeleteMapping("{taskId}")
-    public ResponseEntity<TaskDto> deleteTask(@PathVariable Long taskId) throws TaskNotFoundException{
-        return ResponseEntity.ok(taskMapper.mapToTaskDto(service.deleteTask(taskId)));
+    public void deleteTask(@PathVariable Long taskId) {
+        service.deleteTask(taskId);
     }
 
     @PutMapping
