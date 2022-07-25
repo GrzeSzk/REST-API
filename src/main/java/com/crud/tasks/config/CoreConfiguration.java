@@ -15,7 +15,6 @@ public class CoreConfiguration {
 
     @Bean
     public GroupedOpenApi groupedOpenApi() {
-        //String packagesToScan[] ={"com.crud.tasks.controller"};
         String pathsToMatch[] = {"/v1/tasks"};
         return GroupedOpenApi.builder()
                 .group("tasks")
