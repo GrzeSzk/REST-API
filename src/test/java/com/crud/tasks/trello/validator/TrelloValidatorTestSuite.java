@@ -1,6 +1,7 @@
 package com.crud.tasks.trello.validator;
 
 import com.crud.tasks.domain.TrelloBoard;
+import com.crud.tasks.domain.TrelloCard;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +18,7 @@ public class TrelloValidatorTestSuite {
     TrelloValidator trelloValidator;
 
     @Test
-    public void validateTrelloBoardsTest() {
+    void validateTrelloBoardsTest() {
         //Given
         trelloValidator = new TrelloValidator();
         List<TrelloBoard> trelloBoards = new ArrayList<>();
@@ -29,5 +30,16 @@ public class TrelloValidatorTestSuite {
         //Then
         assertEquals(3, resultList.size());
         assertEquals("Test Board no2", resultList.get(1).getName());
+    }
+
+    @Test
+    void validateCardTest() {
+        //Given
+        trelloValidator = new TrelloValidator();
+        TrelloCard trelloCard = new TrelloCard("Name","Desc", "Pos", "21");
+        //When
+        trelloValidator.validateCard(trelloCard);
+        //Then
+        assertEquals("Name", trelloCard.getName());
     }
 }
