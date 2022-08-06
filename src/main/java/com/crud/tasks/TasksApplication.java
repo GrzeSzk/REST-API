@@ -12,6 +12,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 public class TasksApplication {
 
 	public static void main(String[] args) {
+		System.getenv("MAIL_PASSWORD");
 		SpringApplication.run(TasksApplication.class, args);
 	}
 
