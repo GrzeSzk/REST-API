@@ -2,6 +2,7 @@ package com.crud.tasks.service;
 
 import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.config.CompanyDetails;
+import com.crud.tasks.trello.client.TrelloClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ public class MailCreatorService {
 
     @Autowired
     private CompanyDetails companyDetails;
+
+    @Autowired
+    private TrelloClient trelloClient;
 
     @Autowired
     @Qualifier("templateEngine")
@@ -46,5 +50,18 @@ public class MailCreatorService {
         context.setVariable("admin_config", adminConfig);
         context.setVariable("application_functionality", functionality);
         return templateEngine.process("mail/created-trello-card-mail", context);
+    }
+
+    public String buildDailyMail(String message) {
+        Context context = new Context();
+        context.setVariable("admin_name", adminConfig.getAdminName());
+        context.setVariable("goodbye_message", "Thank you, have a good day.");
+        context.setVariable("company_name", companyDetails.getCompanyName());
+        context.setVariable("preview_message", "Trello board update info");
+        context.setVariable("show button", false);
+        context.setVariable("is_friend", false);
+        context.setVariable("admin_config", adminConfig);
+        context.setVariable("daily_update", trelloClient.getTrelloBoards().size());
+        return templateEngine.process("mail/daily-update-mail", context);
     }
 }
